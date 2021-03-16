@@ -54,7 +54,7 @@ function Navbar() {
 		const autocompleteResults = await getAutoCompleteSearch(e.target.value)
 		// display as dropdown
 
-		console.log(autocompleteResults.ResultSet.Result)
+		console.log(autocompleteResults)
 	}
 
 	// dropdown

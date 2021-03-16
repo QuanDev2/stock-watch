@@ -28,17 +28,53 @@ export async function getAnalysis(symbol) {
 	).json()
 }
 
+export async function getTrendingLowLatency() {
+	return await (
+		await (
+			await fetch(
+				'https://yahoo-finance-low-latency.p.rapidapi.com/v1/finance/trending/US',
+				{
+					method: 'GET',
+					headers: {
+						'x-rapidapi-key': process.env.REACT_APP_API_KEY,
+						'x-rapidapi-host': 'yahoo-finance-low-latency.p.rapidapi.com'
+					}
+				}
+			)
+		).json()
+	).finance.result[0].quotes
+}
+
+export async function getStockDetailsLowLatency(symbol) {
+	return await (
+		await (
+			await fetch(
+				`https://yahoo-finance-low-latency.p.rapidapi.com/v11/finance/quoteSummary/${symbol}?modules=defaultKeyStatistics%2CassetProfile`,
+				{
+					method: 'GET',
+					headers: {
+						'x-rapidapi-key': process.env.REACT_APP_API_KEY,
+						'x-rapidapi-host': 'yahoo-finance-low-latency.p.rapidapi.com'
+					}
+				}
+			)
+		).json()
+	).quoteSummary.result[0]
+}
+
 export async function getAutoCompleteSearch(query) {
 	return await (
-		await fetch(
-			`https://yahoo-finance-low-latency.p.rapidapi.com/v6/finance/autocomplete?query=${query}&lang=en&region=US`,
-			{
-				method: 'GET',
-				headers: {
-					'x-rapidapi-key': process.env.REACT_APP_API_KEY,
-					'x-rapidapi-host': 'yahoo-finance-low-latency.p.rapidapi.com'
+		await (
+			await fetch(
+				`https://yahoo-finance-low-latency.p.rapidapi.com/v6/finance/autocomplete?query=${query}&lang=en&region=US`,
+				{
+					method: 'GET',
+					headers: {
+						'x-rapidapi-key': process.env.REACT_APP_API_KEY,
+						'x-rapidapi-host': 'yahoo-finance-low-latency.p.rapidapi.com'
+					}
 				}
-			}
-		)
-	).json()
+			)
+		).json()
+	).ResultSet.Result
 }
