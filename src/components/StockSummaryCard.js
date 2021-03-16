@@ -22,6 +22,7 @@ const Container = styled.div`
 	}
 `
 
+
 function StockSummaryCard({ currentPrice, openChange, volume }) {
 	return (
 		<Container>
@@ -31,6 +32,7 @@ function StockSummaryCard({ currentPrice, openChange, volume }) {
 			<p> Volume: {volume} shares </p>
 		</Container>
 	)
+
 }
 
 export default StockSummaryCard

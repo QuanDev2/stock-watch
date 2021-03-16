@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
+import { getAutoCompleteSearch } from '../utils/ApiService'
 
 const Container = styled.nav`
 	display: flex;
@@ -41,10 +42,22 @@ const LinkContainer = styled.div``
 
 function Navbar() {
 	const [searchInput, setSearchInput] = useState('')
+	const [searchResults, setSearchResults] = useState([])
 
 	const handleSubmit = e => {
 		e.preventDefault()
 	}
+
+	async function handleInputchange(e) {
+		setSearchInput(e.target.value)
+		// make api call to /auto-complete
+		const autocompleteResults = await getAutoCompleteSearch(e.target.value)
+		// display as dropdown
+
+		console.log(autocompleteResults.ResultSet.Result)
+	}
+
+	// dropdown
 
 	return (
 		<Container>
@@ -54,7 +67,7 @@ function Navbar() {
 					type="search"
 					placeholder="Search a Stock"
 					value={searchInput}
-					onChange={e => setSearchInput(e.target.value)}
+					onChange={handleInputchange}
 				/>
 				<SubmitBtn>
 					<BsSearch />

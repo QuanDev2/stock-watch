@@ -15,9 +15,15 @@ const MarketSummaryContainer = styled.div`
 	
 
 function Homepage() {
+	//marketSummaryState []
+
+	// useEffect()
+	// make api calls to nasdaq, spy, dow
+
 	return (
 		<Container>
 			<MarketSummaryContainer>
+
 				<StockSummaryCard 
 					currentPrice = {500}
 					openChange = {15}
@@ -33,6 +39,7 @@ function Homepage() {
 					openChange = {15}
 					volume = {1000000}
 				/>
+
 			</MarketSummaryContainer>
 		</Container>
 	)
