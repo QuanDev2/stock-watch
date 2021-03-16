@@ -5,7 +5,7 @@ const Container = styled.div`
 	border: solid 1px #bbb;
 `
 
-function StockSummaryCard() {
+function StockSummaryCard({ currentPrice, openPrice }) {
 	return <Container></Container>
 }
 
