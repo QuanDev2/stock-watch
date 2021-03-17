@@ -43,6 +43,7 @@ export async function getTrendingLowLatency() {
 			)
 		).json()
 	).finance.result[0].quotes
+	
 }
 
 export async function getStockDetailsLowLatency(symbol) {
