@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from '@emotion/styled'
 import { Link } from 'react-router-dom'
 import { BsSearch } from 'react-icons/bs'
-import { getAutoCompleteSearch } from '../utils/ApiService'
+import { getAutoCompleteSearch, getStatistics } from '../../utils/ApiService'
+import Dropdown from './Dropdown'
 
 const Container = styled.nav`
 	display: flex;
@@ -38,11 +39,16 @@ const SubmitBtn = styled.button`
 	border-radius: 0px 5px 5px 0px;
 `
 
+const DropdownContainer = styled.div``
+
 const LinkContainer = styled.div``
 
 function Navbar() {
 	const [searchInput, setSearchInput] = useState('')
 	const [searchResults, setSearchResults] = useState([])
+	const [openDropdown, setOpenDropdown] = useState(false)
+
+	const dropdownRef = useRef()
 
 	const handleSubmit = e => {
 		e.preventDefault()
@@ -51,13 +57,43 @@ function Navbar() {
 	async function handleInputchange(e) {
 		setSearchInput(e.target.value)
 		// make api call to /auto-complete
-		const autocompleteResults = await getAutoCompleteSearch(e.target.value)
+		setSearchResults(await getAutoCompleteSearch(e.target.value))
 		// display as dropdown
-
-		console.log(autocompleteResults)
+		setOpenDropdown(true)
+		console.log(searchResults)
 	}
 
+	const handleDropdownOutsideClick = e => {
+		// if click outside, close dropdown
+		if (!dropdownRef.current.contains(e.target)) {
+			setOpenDropdown(false)
+		}
+	}
+
+	useEffect(() => {
+		document.addEventListener('mousedown', handleDropdownOutsideClick)
+
+		console.log(SearchForm)
+
+		return () => {
+			document.removeEventListener('mousedown', handleDropdownOutsideClick)
+		}
+	}, [])
+
 	// dropdown
+	// useEffect(() => {
+	// 	let dow, nasdaq, spy
+	// 	async function fetchData() {
+	// 		;[dow, spy, nasdaq] = await Promise.all([
+	// 			getStatistics('dow'),
+
+	// 			getStatistics('spy'),
+	// 			getStatistics('ndaq')
+	// 		])
+	// 		setMarketState([dow, spy, nasdaq])
+	// 	}
+	// 	fetchData()
+	// }, [])
 
 	return (
 		<Container>
@@ -72,6 +108,13 @@ function Navbar() {
 				<SubmitBtn>
 					<BsSearch />
 				</SubmitBtn>
+				<DropdownContainer ref={dropdownRef}>
+					<Dropdown
+						contentList={searchResults}
+						open={openDropdown}
+						searchInput={searchInput}
+					/>
+				</DropdownContainer>
 			</SearchForm>
 			<LinkContainer>
 				<Link to="#">My Stocks</Link>

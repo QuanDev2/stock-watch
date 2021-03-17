@@ -1,10 +1,13 @@
+const API_KEY = process.env.REACT_APP_API_KEY_2
+const API_KEY_LOW_LATENCY = process.env.REACT_APP_API_KEY_LOW_LATENCY
+
 function fetchYahooFinanceData(endpoint, symbol, region = 'US') {
 	const BASE_URL = 'https://apidojo-yahoo-finance-v1.p.rapidapi.com'
 	const URL = `${BASE_URL}${endpoint}?symbol=${symbol}&region=${region}`
 	return fetch(URL, {
 		method: 'GET',
 		headers: {
-			'x-rapidapi-key': process.env.REACT_APP_API_KEY,
+			'x-rapidapi-key': API_KEY,
 			'x-rapidapi-host': 'apidojo-yahoo-finance-v1.p.rapidapi.com'
 		}
 	})
@@ -36,7 +39,7 @@ export async function getTrendingLowLatency() {
 				{
 					method: 'GET',
 					headers: {
-						'x-rapidapi-key': process.env.REACT_APP_API_KEY,
+						'x-rapidapi-key': API_KEY_LOW_LATENCY,
 						'x-rapidapi-host': 'yahoo-finance-low-latency.p.rapidapi.com'
 					}
 				}
@@ -54,7 +57,7 @@ export async function getStockDetailsLowLatency(symbol) {
 				{
 					method: 'GET',
 					headers: {
-						'x-rapidapi-key': process.env.REACT_APP_API_KEY,
+						'x-rapidapi-key': API_KEY_LOW_LATENCY,
 						'x-rapidapi-host': 'yahoo-finance-low-latency.p.rapidapi.com'
 					}
 				}
@@ -71,7 +74,7 @@ export async function getAutoCompleteSearch(query) {
 				{
 					method: 'GET',
 					headers: {
-						'x-rapidapi-key': process.env.REACT_APP_API_KEY,
+						'x-rapidapi-key': API_KEY_LOW_LATENCY,
 						'x-rapidapi-host': 'yahoo-finance-low-latency.p.rapidapi.com'
 					}
 				}

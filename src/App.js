@@ -1,5 +1,5 @@
 import GlobalStyle from './utils/GlobalStyle'
-import Navbar from './components/Navbar'
+import Navbar from './components/navbar/Navbar'
 import Homepage from './pages/homepage/Homepage'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
