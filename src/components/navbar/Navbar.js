@@ -70,6 +70,10 @@ function Navbar() {
 		}
 	}
 
+	const closeDropdownOnItemClick = () => {
+		setOpenDropdown(false)
+	}
+
 	useEffect(() => {
 		document.addEventListener('mousedown', handleDropdownOutsideClick)
 
@@ -79,21 +83,6 @@ function Navbar() {
 			document.removeEventListener('mousedown', handleDropdownOutsideClick)
 		}
 	}, [])
-
-	// dropdown
-	// useEffect(() => {
-	// 	let dow, nasdaq, spy
-	// 	async function fetchData() {
-	// 		;[dow, spy, nasdaq] = await Promise.all([
-	// 			getStatistics('dow'),
-
-	// 			getStatistics('spy'),
-	// 			getStatistics('ndaq')
-	// 		])
-	// 		setMarketState([dow, spy, nasdaq])
-	// 	}
-	// 	fetchData()
-	// }, [])
 
 	return (
 		<Container>
@@ -113,6 +102,7 @@ function Navbar() {
 						contentList={searchResults}
 						open={openDropdown}
 						searchInput={searchInput}
+						closeDropdown={closeDropdownOnItemClick}
 					/>
 				</DropdownContainer>
 			</SearchForm>

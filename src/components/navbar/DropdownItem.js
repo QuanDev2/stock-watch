@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from '@emotion/styled'
+import { Link } from 'react-router-dom'
 
 const TicketSymbol = styled.span`
 	font-weight: 600;
@@ -8,7 +9,7 @@ const TicketSymbol = styled.span`
 `
 const CompanyName = styled.span``
 
-function DropdownItem({ itemKey, symbol, name }) {
+function DropdownItem({ itemKey, symbol, name, closeDropdown }) {
 	const [mouseHover, setMouseHover] = useState(false)
 
 	const Container = styled.li`
@@ -16,6 +17,8 @@ function DropdownItem({ itemKey, symbol, name }) {
 		cursor: pointer;
 		background-color: ${mouseHover ? '#ccc' : 'white'};
 	`
+
+	const linkUrl = `/stock-details/${symbol}`
 
 	return (
 		<Container
@@ -27,8 +30,10 @@ function DropdownItem({ itemKey, symbol, name }) {
 				setMouseHover(false)
 			}}
 		>
-			<TicketSymbol>{symbol}</TicketSymbol>
-			<CompanyName>{name}</CompanyName>
+			<Link to={linkUrl} onClick={closeDropdown}>
+				<TicketSymbol>{symbol}</TicketSymbol>
+				<CompanyName>{name}</CompanyName>
+			</Link>
 		</Container>
 	)
 }

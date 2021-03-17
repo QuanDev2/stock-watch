@@ -12,7 +12,7 @@ const Container = styled.div`
 	box-shadow: ${BOX_SHADOW.SHADOW_2};
 `
 
-function Dropdown({ contentList, open, searchInput }) {
+function Dropdown({ contentList, open, searchInput, closeDropdown }) {
 	if (searchInput && contentList.length === 0) {
 		return (
 			<Container>
@@ -36,6 +36,7 @@ function Dropdown({ contentList, open, searchInput }) {
 							itemKey={item.key}
 							symbol={item.symbol}
 							name={item.name}
+							closeDropdown={closeDropdown}
 						/>
 					))}
 				</ul>
