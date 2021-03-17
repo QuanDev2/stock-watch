@@ -113,7 +113,6 @@ function Navbar() {
 						contentList={searchResults}
 						open={openDropdown}
 						searchInput={searchInput}
-						onmouseleave={e => setOpenDropdown(false)}
 					/>
 				</DropdownContainer>
 			</SearchForm>

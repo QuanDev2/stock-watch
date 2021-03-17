@@ -13,8 +13,6 @@ const Container = styled.div`
 `
 
 function Dropdown({ contentList, open, searchInput }) {
-	console.log(`searchInput: ${searchInput}`)
-	console.log(`contentList: ${contentList}`)
 	if (searchInput && contentList.length === 0) {
 		return (
 			<Container>
