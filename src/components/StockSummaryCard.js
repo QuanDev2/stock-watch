@@ -23,12 +23,12 @@ const Container = styled.div`
 `
 
 
-function StockSummaryCard({ currentPrice, openChange, volume }) {
+function StockSummaryCard({ currentPrice, openChange, volume, symbol }) {
 	return (
 		<Container>
-			<h2>DOW</h2>
+			<h2>{symbol}</h2>
 			<p>Current Price: ${currentPrice} </p>
-			<p>Open Change: %{openChange} </p>
+			<p>Open Change: {openChange} </p>
 			<p> Volume: {volume} shares </p>
 		</Container>
 	)
