@@ -15,14 +15,10 @@ const SpinnerContainer = styled.div`
 
 function StockDetailsPage() {
 	const [loading, setLoading] = useState(true)
+	const [stockData, setStockData] = useState({})
+
 	let { symbol } = useParams()
-	useEffect(() => {
-		const goSleep = async () => {
-			await new Promise(r => setTimeout(r, 2000))
-			setLoading(false)
-		}
-		goSleep()
-	}, [])
+	useEffect(() => {}, [])
 
 	return (
 		<>
