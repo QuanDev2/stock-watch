@@ -2,16 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from '@emotion/styled'
 import PropagateLoader from 'react-spinners/PropagateLoader'
+import { SpinnerContainer } from '../../utils/GlobalStyle'
 
 const Container = styled.div``
-
-const SpinnerContainer = styled.div`
-	display: flex;
-	height: 80vh;
-	justify-content: center;
-	align-items: center;
-	color: green;
-`
 
 function StockDetailsPage() {
 	const [loading, setLoading] = useState(true)

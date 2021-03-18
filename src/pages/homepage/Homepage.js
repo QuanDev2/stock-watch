@@ -1,12 +1,20 @@
 import { useState, useEffect, React } from 'react'
 import styled from '@emotion/styled'
-import StockSummaryCard from '../../components/StockSummaryCard'
-import { getTrendingLowLatency } from '../../utils/ApiService'
+import StockSummaryCard from '../../components/StockSummaryCard.js'
+import WatchListCard from '../../components/WatchListCard.js'
+import { getTrendingLowLatency } from '../../utils/ApiService.js'
 import { getStatistics } from '../../utils/ApiService'
+import PropagateLoader from 'react-spinners/PropagateLoader'
+import SpinnerContainer from '../../utils/GlobalStyle.js'
+import { useSelector } from 'react-redux'
+import { getWatchList } from '../../redux/selectors.js'
 
 
 
 const Container = styled.div`
+	display:flex;
+	flex-direction:column;
+	margin:10px
 	
 `
 
@@ -15,11 +23,14 @@ const MarketSummaryContainer = styled.div`
 	flex-direction:column;
 	justify-content: center;
   	align-items: center;
+	margin-bottom: 15px;
 `
 	
 
 function Homepage() {
 	const [ marketSummaryState, setMarketState ] = useState([])
+	const [ loaded, setLoaded ] = useState(false)
+	const watchList = useSelector(getWatchList)
 	
 	let fetchStats = async (dow,nasdaq,spy) => {
 		try{
@@ -29,6 +40,7 @@ function Homepage() {
 				getStatistics('spy'),
 			])
 			setMarketState([dow,nasdaq,spy])
+			setLoaded(prevLoaded => !prevLoaded)
 		}
 		catch{
 			console.log("FAILED TO ACQUIRE DATA")
@@ -43,29 +55,42 @@ function Homepage() {
 	return (
 		<Container>
 			<MarketSummaryContainer>
-				{marketSummaryState.length != 0 ?
-					<>
+				{ loaded ?
+					<>	<h2>Market Summary</h2>
 						<StockSummaryCard 
-							currentPrice = {marketSummaryState[0].price.regularMarketPrice.fmt }
-							openChange = {marketSummaryState[0].price.preMarketChangePercent.fmt}
+							price = {marketSummaryState[0].price.regularMarketPrice.fmt }
+							change = {marketSummaryState[0].price.regularMarketChangePercent.fmt}
 							volume = {marketSummaryState[0].price.regularMarketVolume.fmt}
 							symbol = {marketSummaryState[0].price.shortName}
 						/>
 						<StockSummaryCard 
-							currentPrice = {marketSummaryState[1].price.regularMarketPrice.fmt}
-							openChange = {marketSummaryState[1].price.preMarketChangePercent.fmt}
+							price = {marketSummaryState[1].price.regularMarketPrice.fmt}
+							change = {marketSummaryState[1].price.regularMarketChangePercent.fmt}
 							volume = {marketSummaryState[1].price.regularMarketVolume.fmt}
 							symbol = {marketSummaryState[1].price.shortName}
 						/>
 						<StockSummaryCard 
-							currentPrice = {marketSummaryState[2].price.regularMarketPrice.fmt}
-							openChange = {marketSummaryState[2].price.preMarketChangePercent.fmt}
+							price = {marketSummaryState[2].price.regularMarketPrice.fmt}
+							change = {marketSummaryState[2].price.regularMarketChangePercent.fmt}
 							volume = {marketSummaryState[2].price.regularMarketVolume.fmt}
 							symbol = {marketSummaryState[2].price.shortName}
-						/>
-					</> : "Loading..."
+						/>	
+					</> : <SpinnerContainer> <PropagateLoader color={'#36D7B7'} size={30} /> </SpinnerContainer>
 				}
 			</MarketSummaryContainer>
+			{ watchList.length > 0 ?
+				<MarketSummaryContainer>
+					<h2>Watch List</h2>
+					{ watchList.map(stock => (
+						<WatchListCard
+							price = {stock.price}
+							change = {stock.change}
+							volume = {stock.volume}
+							symbol = {stock.symbol}
+						/>
+					))}
+				</MarketSummaryContainer> : null
+			}
 		</Container>
 	)
 }
