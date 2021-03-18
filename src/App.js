@@ -2,6 +2,7 @@ import GlobalStyle from './utils/GlobalStyle'
 import Navbar from './components/navbar/Navbar'
 import Homepage from './pages/homepage/Homepage'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import StockDetailsPage from './pages/homepage/StockDetailsPage'
 
 function App() {
 	return (
@@ -11,6 +12,9 @@ function App() {
 			<Switch>
 				<Route exact path="/">
 					<Homepage />
+				</Route>
+				<Route path="/stock-details/:symbol">
+					<StockDetailsPage />
 				</Route>
 			</Switch>
 		</Router>

@@ -14,6 +14,7 @@ function GlobalStyle() {
 
 		a {
 			text-decoration: none;
+			color: #333;
 		}
 
 		li {
