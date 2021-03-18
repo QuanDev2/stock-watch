@@ -77,8 +77,6 @@ function Navbar() {
 	useEffect(() => {
 		document.addEventListener('mousedown', handleDropdownOutsideClick)
 
-		console.log(SearchForm)
-
 		return () => {
 			document.removeEventListener('mousedown', handleDropdownOutsideClick)
 		}

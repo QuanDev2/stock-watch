@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from '@emotion/styled'
 import PropagateLoader from 'react-spinners/PropagateLoader'
+import useIntrinsicValue from '../../hooks/useIntrinsicValue'
 
 const Container = styled.div``
 
@@ -14,11 +15,9 @@ const SpinnerContainer = styled.div`
 `
 
 function StockDetailsPage() {
-	const [loading, setLoading] = useState(true)
-	const [stockData, setStockData] = useState({})
+	const { stockData, loading, error } = useIntrinsicValue()
 
-	let { symbol } = useParams()
-	useEffect(() => {}, [])
+	console.log(stockData)
 
 	return (
 		<>
@@ -28,7 +27,7 @@ function StockDetailsPage() {
 				</SpinnerContainer>
 			) : (
 				<Container>
-					<h1>This is stock detail page for {symbol} </h1>
+					<h1>This is stock detail page for {stockData.symbol} </h1>
 				</Container>
 			)}
 		</>

@@ -13,7 +13,7 @@ function App() {
 				<Route exact path="/">
 					<Homepage />
 				</Route>
-				<Route path="/stock-details/:symbol">
+				<Route exact path="/stock-details/:symbol">
 					<StockDetailsPage />
 				</Route>
 			</Switch>
