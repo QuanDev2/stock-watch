@@ -199,11 +199,11 @@ function useIntrinsicValue() {
 		} else if (beta > 1.6) {
 			newBeta = 1.6
 		}
-		console.log(
-			`beta: ${newBeta},      discount rate: ${
-				RISK_FREE_RATE + beta * MARKET_RISK_PREMIUM
-			}`
-		)
+		// console.log(
+		// 	`beta: ${newBeta},      discount rate: ${
+		// 		RISK_FREE_RATE + beta * MARKET_RISK_PREMIUM
+		// 	}`
+		// )
 		return RISK_FREE_RATE + beta * MARKET_RISK_PREMIUM
 	}
 
@@ -229,22 +229,22 @@ function useIntrinsicValue() {
 			projectedCashFlow *= growthRate
 			const discountedValue = projectedCashFlow * discountFactor
 			sum += discountedValue
-			console.log(
-				`i = ${i}, projectedCashFlow: ${projectedCashFlow}, discountFactor: ${discountFactor}, discountedValue: ${discountedValue}`
-			)
+			// console.log(
+			// 	`i = ${i}, projectedCashFlow: ${projectedCashFlow}, discountFactor: ${discountFactor}, discountedValue: ${discountedValue}`
+			// )
 		}
-		console.log(`pv: ${sum}`)
+		// console.log(`pv: ${sum}`)
 		return sum
 	}
 
 	const getDebtPerShare = (totalDebt, numShare) => {
-		console.log(`debt/share: ${totalDebt / numShare}`)
+		// console.log(`debt/share: ${totalDebt / numShare}`)
 
 		return totalDebt / numShare
 	}
 
 	const getCashPerShare = (totalInvestment, numShare) => {
-		console.log(`cash/share: ${totalInvestment / numShare}`)
+		// console.log(`cash/share: ${totalInvestment / numShare}`)
 
 		return totalInvestment / numShare
 	}
@@ -253,11 +253,11 @@ function useIntrinsicValue() {
 		sumDiscountedCashFlow20Years,
 		numShare
 	) => {
-		console.log(
-			`intrinsic before cash or debt: ${
-				sumDiscountedCashFlow20Years / numShare
-			}`
-		)
+		// console.log(
+		// 	`intrinsic before cash or debt: ${
+		// 		sumDiscountedCashFlow20Years / numShare
+		// 	}`
+		// )
 
 		return sumDiscountedCashFlow20Years / numShare
 	}
@@ -267,11 +267,11 @@ function useIntrinsicValue() {
 		cashPerShare,
 		intrinsicValueBeforeCashOrDebt
 	) => {
-		console.log(
-			`final intrinsic: ${
-				intrinsicValueBeforeCashOrDebt + cashPerShare - debtPerShare
-			}`
-		)
+		// console.log(
+		// 	`final intrinsic: ${
+		// 		intrinsicValueBeforeCashOrDebt + cashPerShare - debtPerShare
+		// 	}`
+		// )
 
 		return intrinsicValueBeforeCashOrDebt + cashPerShare - debtPerShare
 	}

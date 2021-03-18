@@ -43,7 +43,7 @@ const DropdownContainer = styled.div``
 
 const LinkContainer = styled.div``
 
-function Navbar() {
+function Navbar({ changeSymbol }) {
 	const [searchInput, setSearchInput] = useState('')
 	const [searchResults, setSearchResults] = useState([])
 	const [openDropdown, setOpenDropdown] = useState(false)
@@ -101,6 +101,7 @@ function Navbar() {
 						open={openDropdown}
 						searchInput={searchInput}
 						closeDropdown={closeDropdownOnItemClick}
+						changeSymbol={changeSymbol}
 					/>
 				</DropdownContainer>
 			</SearchForm>

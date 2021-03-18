@@ -16,7 +16,6 @@ const SpinnerContainer = styled.div`
 
 function StockDetailsPage() {
 	const { stockData, loading, error } = useIntrinsicValue()
-
 	console.log(stockData)
 
 	return (
