@@ -39,7 +39,7 @@ function StockSummaryCard({ price, change, volume, symbol }) {
 			</ItemContainer>
 			<ItemContainer>
 				<ItemTitle>Since last close:</ItemTitle>
-				<ItemContent>${change}</ItemContent>
+				<ItemContent>{change}</ItemContent>
 			</ItemContainer>
 			<ItemContainer>
 				<ItemTitle>Volume:</ItemTitle>

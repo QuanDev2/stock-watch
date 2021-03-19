@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
+import { addStock } from '../../redux/actions'
+import { useDispatch } from 'react-redux'
+
 import PropagateLoader from 'react-spinners/PropagateLoader'
 import useIntrinsicValue from '../../hooks/useIntrinsicValue'
-import { GrAdd } from 'react-icons/gr'
 import mockData from '../../mockdata.json'
 import Section from './Section'
 
@@ -103,12 +105,25 @@ const StatsContainer = styled.div``
 
 const StatsContent = styled.div``
 
+/*******************************************************
+ *
+ *
+ */
 function StockDetailsPage() {
 	// const { stockData, loading, error } = useIntrinsicValue()
-	const [addedToWatchlist, setAddedToWatchlist] = useState(true)
+	const [addedToWatchlist, setAddedToWatchlist] = useState(false)
 	const stockData = mockData.T
 	const loading = false
-	console.log(stockData)
+	const dispatch = useDispatch()
+	const addToWatchListAction = addStock(
+		stockData.symbol,
+		stockData.currentPrice,
+		stockData.priceChangeRaw,
+		stockData.priceChangePercentFmt,
+		stockData.name,
+		stockData.intrinsicValue,
+		stockData.verdict
+	)
 
 	const {
 		generalItems,
@@ -128,6 +143,9 @@ function StockDetailsPage() {
 		font-weight: 700;
 		font-size: 2rem;
 	`
+	const handleAddToWatchlist = e => {
+		dispatch(addToWatchListAction)
+	}
 
 	return (
 		<>
@@ -147,7 +165,9 @@ function StockDetailsPage() {
 									Added to Watchlist
 								</AddtoWatchListBtnDisabled>
 							) : (
-								<AddtoWatchListBtn>Add to Watchlist</AddtoWatchListBtn>
+								<AddtoWatchListBtn onClick={handleAddToWatchlist}>
+									Add to Watchlist
+								</AddtoWatchListBtn>
 							)}
 						</LabelContainer>
 						<CurrentPrice>{stockData.currentPrice}</CurrentPrice>

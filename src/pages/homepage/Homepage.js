@@ -153,9 +153,12 @@ function Homepage() {
 							{watchList.map(stock => (
 								<WatchListCard
 									price={stock.price}
-									change={stock.change}
-									volume={stock.volume}
+									changeRaw={stock.priceChangeRaw}
+									changeFmt={stock.priceChangeFmt}
 									symbol={stock.symbol}
+									name={stock.name}
+									intrinsicValue={stock.intrinsicValue}
+									verdict={stock.verdict}
 								/>
 							))}
 						</WatchlistContainer>

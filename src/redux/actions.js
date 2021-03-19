@@ -5,23 +5,21 @@ export const UPDATE_WATCHLIST = 'UPDATE_WATCHLIST'
 export function addStock(
 	symbol,
 	price,
-	changeRaw,
-	changeFmt,
+	princeChangeRaw,
+	priceChangeFmt,
 	name,
 	intrinsicValue,
-	verdictRaw,
-	verdictFmt
+	verdict
 ) {
 	return {
 		type: ADD_STOCK_TO_WATCHLIST,
 		symbol: symbol,
 		price: price,
-		changeRaw: changeRaw,
-		changeFmt: changeFmt,
+		changeRaw: princeChangeRaw,
+		changeFmt: priceChangeFmt,
 		name: name,
 		intrinsicValue: intrinsicValue,
-		verdictFmt: verdictFmt,
-		verdictRaw: verdictRaw
+		verdict: verdict
 	}
 }
 
@@ -35,23 +33,20 @@ export function removeStock(symbol) {
 export function updateWatchList(
 	symbol,
 	price,
-	change,
 	name,
-	changeRaw,
-	changeFmt,
+	priceChangeRaw,
+	priceChangeFmt,
 	intrinsicValue,
-	verdictRaw,
-	verdictFmt
+	verdict
 ) {
 	return {
 		type: UPDATE_WATCHLIST,
 		symbol: symbol,
 		price: price,
-		changeRaw: changeRaw,
-		changeFmt: changeFmt,
+		changeRaw: priceChangeRaw,
+		changeFmt: priceChangeFmt,
 		name: name,
 		intrinsicValue: intrinsicValue,
-		verdictFmt: verdictFmt,
-		verdictRaw: verdictRaw
+		verdict: verdict
 	}
 }
