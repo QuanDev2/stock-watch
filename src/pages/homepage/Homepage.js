@@ -148,7 +148,7 @@ function Homepage() {
 					</div>
 
 					{watchList.length ? (
-						<MarketSummaryContainer>
+						<WatchlistContainer>
 							<SectionHeader>Watch List</SectionHeader>
 							{watchList.map(stock => (
 								<WatchListCard
@@ -158,7 +158,7 @@ function Homepage() {
 									symbol={stock.symbol}
 								/>
 							))}
-						</MarketSummaryContainer>
+						</WatchlistContainer>
 					) : null}
 				</Container>
 			)}

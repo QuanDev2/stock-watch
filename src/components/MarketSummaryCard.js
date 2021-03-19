@@ -45,6 +45,13 @@ function StockSummaryCard({ price, change, volume, symbol }) {
 				<ItemTitle>Volume:</ItemTitle>
 				<ItemContent>${volume}</ItemContent>
 			</ItemContainer>
+			<button
+				onClick={() => {
+					dispatch(addToWatchList)
+				}}
+			>
+				+
+			</button>
 		</Container>
 	)
 }
