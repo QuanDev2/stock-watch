@@ -31,7 +31,7 @@ export async function getAnalysis(symbol) {
 	).json()
 }
 
-export async function getTrendingLowLatency() {
+export async function getTrendingStocks() {
 	return await (
 		await (
 			await fetch(
@@ -52,7 +52,7 @@ export async function getStockDetailsLowLatency(symbol) {
 	return await (
 		await (
 			await fetch(
-				`https://yahoo-finance-low-latency.p.rapidapi.com/v11/finance/quoteSummary/${symbol}?modules=defaultKeyStatistics%2CassetProfile`,
+				`https://yahoo-finance-low-latency.p.rapidapi.com/v11/finance/quoteSummary/${symbol}?modules=defaultKeyStatistics`,
 				{
 					method: 'GET',
 					headers: {
@@ -63,6 +63,24 @@ export async function getStockDetailsLowLatency(symbol) {
 			)
 		).json()
 	).quoteSummary.result[0]
+}
+
+export async function getNameAndSymbol(symbol) {
+	const result = await (
+		await (
+			await fetch(
+				`https://yahoo-finance-low-latency.p.rapidapi.com/v11/finance/quoteSummary/${symbol}?modules=price`,
+				{
+					method: 'GET',
+					headers: {
+						'x-rapidapi-key': API_KEY_LOW_LATENCY,
+						'x-rapidapi-host': 'yahoo-finance-low-latency.p.rapidapi.com'
+					}
+				}
+			)
+		).json()
+	).quoteSummary.result[0].price
+	return { symbol: result.symbol, name: result.shortName }
 }
 
 export async function getAutoCompleteSearch(query) {

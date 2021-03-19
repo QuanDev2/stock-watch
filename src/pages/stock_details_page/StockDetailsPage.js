@@ -62,21 +62,24 @@ const PriceCaption = styled.div`
 const AddtoWatchListBtn = styled.button`
 	border: var(--blue) solid 1px;
 	color: white;
-
 	background-color: var(--blue);
-
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
 	padding: 0.4rem 1.2rem;
 	border-radius: 1rem;
 	outline: none;
 	cursor: pointer;
-
 	&:hover {
 		filter: brightness(115%);
 	}
 `
+
+const AddtoWatchListBtnDisabled = styled(AddtoWatchListBtn)`
+	border: var(--light-gray) solid 1px;
+	background-color: var(--light-gray);
+	&:hover {
+		filter: brightness(100%);
+	}
+`
+
 const StatsHeader = styled.h2`
 	font-size: 1.5rem;
 	margin-top: 1rem;
@@ -87,7 +90,9 @@ const MainContent = styled.div`
 	justify-content: space-between;
 `
 
-const VerdictContainer = styled.div``
+const VerdictContainer = styled.div`
+	text-align: right;
+`
 
 const IntrinsicValue = styled.div`
 	font-size: 2.5rem;
@@ -99,9 +104,10 @@ const StatsContainer = styled.div``
 const StatsContent = styled.div``
 
 function StockDetailsPage() {
-	const { stockData, loading, error } = useIntrinsicValue()
-	// const stockData = mockData[0]
-	// const loading = false
+	// const { stockData, loading, error } = useIntrinsicValue()
+	const [addedToWatchlist, setAddedToWatchlist] = useState(true)
+	const stockData = mockData.T
+	const loading = false
 	console.log(stockData)
 
 	const {
@@ -136,10 +142,13 @@ function StockDetailsPage() {
 							<Label>
 								{stockData.name} ({stockData.symbol})
 							</Label>
-							<AddtoWatchListBtn>
-								{/* <GrAdd style={{ marginRight: '0.4rem' }} color="var(--blue)" />{' '} */}
-								Add to Watchlist
-							</AddtoWatchListBtn>
+							{addedToWatchlist ? (
+								<AddtoWatchListBtnDisabled disabled>
+									Added to Watchlist
+								</AddtoWatchListBtnDisabled>
+							) : (
+								<AddtoWatchListBtn>Add to Watchlist</AddtoWatchListBtn>
+							)}
 						</LabelContainer>
 						<CurrentPrice>{stockData.currentPrice}</CurrentPrice>
 						<MarketChange>
