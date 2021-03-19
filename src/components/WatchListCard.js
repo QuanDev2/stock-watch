@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import { useDispatch } from 'react-redux'
-import { addStock } from '../redux/actions.js'
+import { removeStock } from '../redux/actions.js'
 const Container = styled.div`
 	border: solid 1px #bbb;
 	box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -24,19 +24,19 @@ const Container = styled.div`
 `
 
 
-function StockSummaryCard({ price, change, volume, symbol }) {
+function WatchListCard({ price, change, volume, symbol }) {
 	const dispatch = useDispatch()
-	const addToWatchList = addStock(symbol,price,change,volume)
+	const removeFromWatchList = removeStock(symbol)
 	return (
 		<Container>
 			<h2>{symbol}</h2>
 			<p>Current Price: ${price} </p>
 			<p>Open Change: {change} </p>
 			<p> Volume: {volume} shares </p>
-			<button onClick={() => {(dispatch(addToWatchList))}} >+</button>
+			<button onClick={() => {(dispatch(removeFromWatchList))}} >-</button>
 		</Container>
 	)
 
 }
 
-export default StockSummaryCard
+export default WatchListCard

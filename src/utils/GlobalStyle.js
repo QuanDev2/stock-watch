@@ -1,4 +1,5 @@
 import { Global, css } from '@emotion/react'
+import styled from '@emotion/styled'
 
 function GlobalStyle() {
 	const globalStyle = css`
@@ -41,3 +42,11 @@ export const BOX_SHADOW = {
 	SHADOW_4: '0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22)',
 	SHADOW_5: '0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)'
 }
+
+export const SpinnerContainer = styled.div`
+display: flex;
+height: 80vh;
+justify-content: center;
+align-items: center;
+color: green;
+`
