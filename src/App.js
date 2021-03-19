@@ -3,25 +3,20 @@ import Navbar from './components/navbar/Navbar'
 import { useState } from 'react'
 import Homepage from './pages/homepage/Homepage'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import { v4 as uuid } from 'uuid'
 
-import StockDetailsPage from './pages/homepage/StockDetailsPage'
+import StockDetailsPage from './pages/stock_details_page/StockDetailsPage'
 
 function App() {
-	const [symbol, setSymbol] = useState('')
-	const changeSymbol = newSymbol => {
-		setSymbol(newSymbol)
-	}
 	return (
 		<Router>
 			<GlobalStyle />
-			<Navbar changeSymbol={changeSymbol} />
+			<Navbar />
 			<Switch>
 				<Route exact path="/">
 					<Homepage />
 				</Route>
 				<Route path="/stock-details/:symbol">
-					<StockDetailsPage symbol={symbol} />
+					<StockDetailsPage />
 				</Route>
 			</Switch>
 		</Router>

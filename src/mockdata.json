@@ -1,0 +1,33 @@
+[
+	{
+		"cash": 9740000000,
+		"cashAndShortTermInvestments": 9769000000,
+		"cashFlowGrowthRate1to5": "0.02",
+		"cashFlowGrowthRate6to10": "0.01",
+		"cashFlowGrowthrate11to20": "0.05",
+		"cashFmt": "$9.74B",
+		"currentPrice": 30.01,
+		"discountRate": "0.04",
+		"dividendYieldFmt": "6.90%",
+		"eps": "$3.24",
+		"intrinsicValue": "82.94",
+		"longTermDebtFmt": "$151.93B",
+		"marketCap": "$214.23B",
+		"name": "AT&T Inc.",
+		"operatingCashFlow": 43129999360,
+		"operatingCashFlowFmt": "$43.13B",
+		"pe": "$9.26",
+		"priceChangeFmt": "-0.14",
+		"priceChangePercentFmt": "-0.46%",
+		"priceChangeRaw": -0.13999939,
+		"sharesOutStanding": 7138460160,
+		"sharesOutStandingFmt": "7.14B",
+		"shortTermDebt": 3281000000,
+		"shortTermDebtFmt": "$3.28B",
+		"shortTermInvestments": 29000000,
+		"shortTermInvestmentsFmt": "$29M",
+		"symbol": "T",
+		"totalDebt": 155209000000,
+		"verdict": "-63.82"
+	}
+]

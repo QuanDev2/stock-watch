@@ -58,27 +58,56 @@ function useIntrinsicValue() {
 	let statisticsData, balanceSheetdata, analysisData
 
 	const fetchAllData = async () => {
+		setLoading(true)
 		try {
 			;[statisticsData, balanceSheetdata, analysisData] = await Promise.all([
 				getStatistics(symbol),
 				getBalanceSheet(symbol),
 				getAnalysis(symbol)
 			])
+
 			// do calculations
 			const currentOperatingCashFlow =
 				statisticsData.financialData.operatingCashflow.raw
+			const currentOperatingCashFlowFmt =
+				'$' + statisticsData.financialData.operatingCashflow.fmt
 			const currentPrice = statisticsData.price.regularMarketPrice.raw
+			const name = statisticsData.price.shortName
 			const sharesOutStanding =
 				statisticsData.defaultKeyStatistics.sharesOutstanding.raw
+			const sharesOutStandingFmt =
+				statisticsData.defaultKeyStatistics.sharesOutstanding.fmt
+
 			const beta = statisticsData.summaryDetail.beta.raw
-			let shortTermInvestments = 0
+			const priceChange = statisticsData.price.regularMarketChange.fmt
+			const priceChangePercent =
+				statisticsData.price.regularMarketChangePercent.fmt
+			const priceChangeRaw = statisticsData.price.regularMarketChange.raw
+
+			const marketCap = '$' + statisticsData.price.marketCap.fmt
+			const eps = statisticsData.defaultKeyStatistics.forwardEps
+				? '$' + statisticsData.defaultKeyStatistics.forwardEps.fmt
+				: '-'
+			const pe = statisticsData.defaultKeyStatistics.forwardPE
+				? '$' + statisticsData.defaultKeyStatistics.forwardPE.fmt
+				: '-'
+			const dividendYieldFmt = statisticsData.summaryDetail.dividendYield
+				? statisticsData.summaryDetail.dividendYield.fmt
+				: '-'
+
 			let cash = 0
+			let cashFmt = '-'
+			let shortTermInvestments = 0
+			let shortTermInvestmentsFmt = '-'
+
 			let shortTermDebt = 0
+			let shortTermDebtFmt = '-'
+			let longTermDebtFmt = '-'
 			let longTermDebt = 0
 			let totalDebt = 0
 			let cashAndShortTermInvestments = 0
 			let cashFlowGrowthRate1to5 = 1.0
-			let cashFlowGrowthRate5to10 = 1.0
+			let cashFlowGrowthRate6to10 = 1.0
 			let cashFlowGrowthrate11to20 = 1.0
 			let discountRate = 0.0
 			// short term investments
@@ -89,6 +118,10 @@ function useIntrinsicValue() {
 				shortTermInvestments =
 					balanceSheetdata.balanceSheetHistoryQuarterly
 						.balanceSheetStatements[0].shortTermInvestments.raw
+				shortTermInvestmentsFmt =
+					'$' +
+					balanceSheetdata.balanceSheetHistoryQuarterly
+						.balanceSheetStatements[0].shortTermInvestments.fmt
 			}
 
 			// cash
@@ -99,6 +132,10 @@ function useIntrinsicValue() {
 				cash =
 					balanceSheetdata.balanceSheetHistoryQuarterly
 						.balanceSheetStatements[0].cash.raw
+				cashFmt =
+					'$' +
+					balanceSheetdata.balanceSheetHistoryQuarterly
+						.balanceSheetStatements[0].cash.fmt
 			}
 
 			// cash and short term investments
@@ -112,6 +149,10 @@ function useIntrinsicValue() {
 				shortTermDebt =
 					balanceSheetdata.balanceSheetHistoryQuarterly
 						.balanceSheetStatements[0].shortLongTermDebt.raw
+				shortTermDebtFmt =
+					'$' +
+					balanceSheetdata.balanceSheetHistoryQuarterly
+						.balanceSheetStatements[0].shortLongTermDebt.fmt
 			}
 
 			// long term debt
@@ -119,6 +160,10 @@ function useIntrinsicValue() {
 				balanceSheetdata.balanceSheetHistoryQuarterly.balanceSheetStatements[0]
 					.longTermDebt
 			) {
+				longTermDebtFmt =
+					'$' +
+					balanceSheetdata.balanceSheetHistoryQuarterly
+						.balanceSheetStatements[0].longTermDebt.fmt
 				longTermDebt =
 					balanceSheetdata.balanceSheetHistoryQuarterly
 						.balanceSheetStatements[0].longTermDebt.raw
@@ -131,7 +176,7 @@ function useIntrinsicValue() {
 			cashFlowGrowthRate1to5 = analysisData.earningsTrend.trend[4].growth.raw
 
 			// growth rate 5 - 10 years
-			cashFlowGrowthRate5to10 = cashFlowGrowthRate1to5 / 2
+			cashFlowGrowthRate6to10 = cashFlowGrowthRate1to5 / 2
 
 			// growth rate 10-20 years
 			cashFlowGrowthrate11to20 = US_GPD_GROWTH + 0.01
@@ -143,7 +188,7 @@ function useIntrinsicValue() {
 			const sumDiscountedCashFlow20Years = getSumDiscountedCashFlow20Years(
 				currentOperatingCashFlow,
 				cashFlowGrowthRate1to5,
-				cashFlowGrowthRate5to10,
+				cashFlowGrowthRate6to10,
 				cashFlowGrowthrate11to20,
 				discountRate
 			)
@@ -169,21 +214,36 @@ function useIntrinsicValue() {
 			// set state
 			setStockData({
 				symbol: symbol,
+				name: name,
 				currentPrice: currentPrice,
-				currentOperatingCashFlow: currentOperatingCashFlow,
+				priceChangeFmt: priceChange,
+				priceChangePercentFmt: priceChangePercent,
+				priceChangeRaw: priceChangeRaw,
+
+				marketCap: marketCap,
+				eps: eps,
+				pe: pe,
+				dividendYieldFmt: dividendYieldFmt,
+				sharesOutStandingFmt: sharesOutStandingFmt,
+
+				operatingCashFlow: currentOperatingCashFlow,
+				operatingCashFlowFmt: currentOperatingCashFlowFmt,
 				shortTermDebt: shortTermDebt,
-				longTermDebt: longTermDebt,
+				shortTermDebtFmt: shortTermDebtFmt,
+				longTermDebtFmt: longTermDebtFmt,
 				totalDebt: totalDebt,
 				cash: cash,
+				cashFmt: cashFmt,
 				shortTermInvestments: shortTermInvestments,
+				shortTermInvestmentsFmt: shortTermInvestmentsFmt,
 				cashAndShortTermInvestments: cashAndShortTermInvestments,
 				sharesOutStanding: sharesOutStanding,
-				cashFlowGrowthRate1to5: cashFlowGrowthRate1to5,
-				cashFlowGrowthRate5to10: cashFlowGrowthRate5to10,
-				cashFlowGrowthrate11to20: cashFlowGrowthrate11to20,
-				discountRate: discountRate,
-				intrinsicValue: intrinsicValue,
-				verdict: verdict
+				cashFlowGrowthRate1to5: cashFlowGrowthRate1to5.toFixed(2),
+				cashFlowGrowthRate6to10: cashFlowGrowthRate6to10.toFixed(2),
+				cashFlowGrowthrate11to20: cashFlowGrowthrate11to20.toFixed(2),
+				discountRate: discountRate.toFixed(2),
+				intrinsicValue: intrinsicValue.toFixed(2),
+				verdict: verdict.toFixed(2)
 			})
 		} catch (err) {
 			setError(err)
@@ -199,11 +259,6 @@ function useIntrinsicValue() {
 		} else if (beta > 1.6) {
 			newBeta = 1.6
 		}
-		// console.log(
-		// 	`beta: ${newBeta},      discount rate: ${
-		// 		RISK_FREE_RATE + beta * MARKET_RISK_PREMIUM
-		// 	}`
-		// )
 		return RISK_FREE_RATE + beta * MARKET_RISK_PREMIUM
 	}
 
@@ -229,23 +284,16 @@ function useIntrinsicValue() {
 			projectedCashFlow *= growthRate
 			const discountedValue = projectedCashFlow * discountFactor
 			sum += discountedValue
-			// console.log(
-			// 	`i = ${i}, projectedCashFlow: ${projectedCashFlow}, discountFactor: ${discountFactor}, discountedValue: ${discountedValue}`
-			// )
 		}
-		// console.log(`pv: ${sum}`)
+
 		return sum
 	}
 
 	const getDebtPerShare = (totalDebt, numShare) => {
-		// console.log(`debt/share: ${totalDebt / numShare}`)
-
 		return totalDebt / numShare
 	}
 
 	const getCashPerShare = (totalInvestment, numShare) => {
-		// console.log(`cash/share: ${totalInvestment / numShare}`)
-
 		return totalInvestment / numShare
 	}
 
@@ -253,12 +301,6 @@ function useIntrinsicValue() {
 		sumDiscountedCashFlow20Years,
 		numShare
 	) => {
-		// console.log(
-		// 	`intrinsic before cash or debt: ${
-		// 		sumDiscountedCashFlow20Years / numShare
-		// 	}`
-		// )
-
 		return sumDiscountedCashFlow20Years / numShare
 	}
 
@@ -267,12 +309,6 @@ function useIntrinsicValue() {
 		cashPerShare,
 		intrinsicValueBeforeCashOrDebt
 	) => {
-		// console.log(
-		// 	`final intrinsic: ${
-		// 		intrinsicValueBeforeCashOrDebt + cashPerShare - debtPerShare
-		// 	}`
-		// )
-
 		return intrinsicValueBeforeCashOrDebt + cashPerShare - debtPerShare
 	}
 
@@ -282,7 +318,7 @@ function useIntrinsicValue() {
 
 	useEffect(() => {
 		fetchAllData()
-	}, [])
+	}, [symbol])
 
 	return { loading, stockData, error }
 }

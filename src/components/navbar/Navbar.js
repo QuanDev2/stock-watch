@@ -60,7 +60,6 @@ function Navbar({ changeSymbol }) {
 		setSearchResults(await getAutoCompleteSearch(e.target.value))
 		// display as dropdown
 		setOpenDropdown(true)
-		console.log(searchResults)
 	}
 
 	const handleDropdownOutsideClick = e => {
