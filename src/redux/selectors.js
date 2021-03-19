@@ -1,3 +1,3 @@
 export function getWatchList(state) {
-    return state
+	return state
 }

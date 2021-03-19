@@ -8,6 +8,7 @@ const Container = styled.div`
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 	transition: 0.3s;
 	width: 100%;
+	cursor: pointer;
 	padding: 0.3rem 1rem;
 	border-radius: 0.3rem;
 	&:hover {
@@ -18,19 +19,19 @@ const Container = styled.div`
 function TrendingStockItem({ symbol, name }) {
 	const path = `/stock-details/${symbol}`
 	return (
-		<Container>
-			<Link to={path}>
+		<Link to={path}>
+			<Container>
 				<span
 					style={{
-						fontWeight: '500',
+						fontWeight: '600',
 						marginRight: '1rem'
 					}}
 				>
 					{symbol}
 				</span>
 				<span>{name}</span>
-			</Link>
-		</Container>
+			</Container>
+		</Link>
 	)
 }
 

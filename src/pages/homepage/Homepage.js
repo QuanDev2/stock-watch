@@ -15,10 +15,8 @@ import mockData from '../../mockdata.json'
 import { v4 as uuid } from 'uuid'
 import TrendingStockItem from '../../components/TrendingStockItem.js'
 
-const TRENDING_LIST_SIZE = 1
-
 const Container = styled.div`
-	max-width: 60%;
+	max-width: 40%;
 	margin: auto;
 	margin-top: 1rem;
 	color: var(--black);
@@ -33,7 +31,10 @@ const MarketSummaryContainer = styled.div`
 	margin-bottom: 15px;
 `
 
-const WatchlistContainer = styled.div``
+const WatchlistContainer = styled.div`
+	width: 500px;
+	margin: auto;
+`
 
 const MarketTrendContainer = styled.div`
 	width: 450px;
@@ -45,12 +46,14 @@ const SectionHeader = styled.h2`
 	text-align: center;
 `
 
+const TRENDING_LIST_SIZE = 9
+
 function Homepage() {
 	const [marketSummaryState, setMarketState] = useState([])
 	const [trendingStocks, setTrendingStocks] = useState([])
 	const [loading, setLoading] = useState(true)
 	const watchList = useSelector(getWatchList)
-
+	console.log(watchList)
 	const fetchData = async (dow, nasdaq, spy, trending) => {
 		try {
 			;[dow, nasdaq, spy, trending] = await Promise.all([
@@ -85,14 +88,12 @@ function Homepage() {
 		// 	setMarketState(mockData.market)
 		// 	setLoading(false)
 		// }, 500)
-		// fetchData(dow, nasdaq, spy, trending)
+		fetchData(dow, nasdaq, spy, trending)
 
 		fetchTrendingStocks()
 		setMarketState(mockData.market)
 		setLoading(false)
 	}, [])
-
-	console.log(trendingStocks)
 
 	return (
 		<>
@@ -105,7 +106,7 @@ function Homepage() {
 					<div
 						style={{
 							display: 'flex',
-							justifyContent: 'space-around'
+							justifyContent: 'space-between'
 						}}
 					>
 						<MarketSummaryContainer>
@@ -146,23 +147,30 @@ function Homepage() {
 							</ul>
 						</MarketTrendContainer>
 					</div>
-
-					{watchList.length ? (
-						<WatchlistContainer>
-							<SectionHeader>Watch List</SectionHeader>
-							{watchList.map(stock => (
-								<WatchListCard
-									price={stock.price}
-									changeRaw={stock.priceChangeRaw}
-									changeFmt={stock.priceChangeFmt}
-									symbol={stock.symbol}
-									name={stock.name}
-									intrinsicValue={stock.intrinsicValue}
-									verdict={stock.verdict}
-								/>
-							))}
-						</WatchlistContainer>
-					) : null}
+					<WatchlistContainer>
+						<SectionHeader style={{ marginTop: '2rem' }}>
+							Watchlist
+						</SectionHeader>
+						{watchList.length ? (
+							<ul>
+								{watchList.map(stock => (
+									<li key={uuid()}>
+										<WatchListCard
+											price={stock.price}
+											changeRaw={stock.priceChangeRaw}
+											changeFmt={stock.priceChangeFmt}
+											symbol={stock.symbol}
+											name={stock.name}
+											intrinsicValue={stock.intrinsicValue}
+											verdict={stock.verdict}
+										/>
+									</li>
+								))}
+							</ul>
+						) : (
+							<div style={{ textAlign: 'center' }}>Watchlist is empty</div>
+						)}
+					</WatchlistContainer>
 				</Container>
 			)}
 		</>

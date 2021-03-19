@@ -110,10 +110,10 @@ const StatsContent = styled.div``
  *
  */
 function StockDetailsPage() {
-	// const { stockData, loading, error } = useIntrinsicValue()
+	const { stockData, loading, error } = useIntrinsicValue()
 	const [addedToWatchlist, setAddedToWatchlist] = useState(false)
-	const stockData = mockData.T
-	const loading = false
+	// const stockData = mockData.T
+	// const loading = false
 	const dispatch = useDispatch()
 	const addToWatchListAction = addStock(
 		stockData.symbol,

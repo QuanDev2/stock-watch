@@ -5,7 +5,7 @@ export const UPDATE_WATCHLIST = 'UPDATE_WATCHLIST'
 export function addStock(
 	symbol,
 	price,
-	princeChangeRaw,
+	priceChangeRaw,
 	priceChangeFmt,
 	name,
 	intrinsicValue,
@@ -15,8 +15,8 @@ export function addStock(
 		type: ADD_STOCK_TO_WATCHLIST,
 		symbol: symbol,
 		price: price,
-		changeRaw: princeChangeRaw,
-		changeFmt: priceChangeFmt,
+		priceChangeRaw: priceChangeRaw,
+		priceChangeFmt: priceChangeFmt,
 		name: name,
 		intrinsicValue: intrinsicValue,
 		verdict: verdict
@@ -43,8 +43,8 @@ export function updateWatchList(
 		type: UPDATE_WATCHLIST,
 		symbol: symbol,
 		price: price,
-		changeRaw: priceChangeRaw,
-		changeFmt: priceChangeFmt,
+		priceChangeRaw: priceChangeRaw,
+		priceChangeFmt: priceChangeFmt,
 		name: name,
 		intrinsicValue: intrinsicValue,
 		verdict: verdict
