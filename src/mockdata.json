@@ -1,5 +1,5 @@
-[
-	{
+{
+	"T": {
 		"cash": 9740000000,
 		"cashAndShortTermInvestments": 9769000000,
 		"cashFlowGrowthRate1to5": "0.02",
@@ -29,5 +29,49 @@
 		"symbol": "T",
 		"totalDebt": 155209000000,
 		"verdict": "-63.82"
-	}
-]
+	},
+	"market": [
+		{
+			"price": {
+				"shortName": "Dow Inc.",
+				"regularMarketPrice": {
+					"fmt": "64.72"
+				},
+				"regularMarketChangePercent": {
+					"fmt": "-1.95%"
+				},
+				"regularMarketVolume": {
+					"fmt": "4.21M"
+				}
+			}
+		},
+		{
+			"price": {
+				"shortName": "Nasdaq, Inc.",
+				"regularMarketPrice": {
+					"fmt": "144.72"
+				},
+				"regularMarketChangePercent": {
+					"fmt": "0.64%"
+				},
+				"regularMarketVolume": {
+					"fmt": "1.82M"
+				}
+			}
+		},
+		{
+			"price": {
+				"shortName": "SPDR S&P 500",
+				"regularMarketPrice": {
+					"fmt": "391.48"
+				},
+				"regularMarketChangePercent": {
+					"fmt": "-1.45%"
+				},
+				"regularMarketVolume": {
+					"fmt": "115.238M"
+				}
+			}
+		}
+	]
+}

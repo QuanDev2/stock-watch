@@ -15,8 +15,11 @@ export function StockReducer(state = [], action) {
 					{
 						symbol: action.symbol,
 						price: action.price,
-						change: action.change,
-						volume: action.volume
+						priceChangeRaw: action.priceChangeRaw,
+						priceChangeFmt: action.priceChangeFmt,
+						name: action.name,
+						intrinsicValue: action.intrinsicValue,
+						verdict: action.verdict
 					}
 				]
 			}
@@ -35,9 +38,13 @@ export function StockReducer(state = [], action) {
 					stock.symbol === action.symbol
 						? {
 								...stock,
+								symbol: action.symbol,
 								price: action.price,
-								change: action.change,
-								volume: action.volume
+								priceChangeRaw: action.priceChangeRaw,
+								priceChangeFmt: action.priceChangeFmt,
+								name: action.name,
+								intrinsicValue: action.intrinsicValue,
+								verdict: action.verdict
 						  }
 						: stock
 				)

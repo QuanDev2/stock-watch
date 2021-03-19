@@ -11,6 +11,7 @@ function GlobalStyle() {
 			box-sizing: border-box;
 			font-family: 'Montserrat', sans-serif;
 			font-size: 16px;
+			line-height: 1.5;
 		}
 
 		a {
@@ -27,6 +28,9 @@ function GlobalStyle() {
 			--green: #00ad4d;
 			--black: #333;
 			--blue: #0069d7;
+			--gray: #555;
+			--light-gray: #999;
+			--lightest-gray: #ddd;
 		}
 	`
 
@@ -44,9 +48,9 @@ export const BOX_SHADOW = {
 }
 
 export const SpinnerContainer = styled.div`
-display: flex;
-height: 80vh;
-justify-content: center;
-align-items: center;
-color: green;
+	display: flex;
+	height: 80vh;
+	justify-content: center;
+	align-items: center;
+	color: green;
 `

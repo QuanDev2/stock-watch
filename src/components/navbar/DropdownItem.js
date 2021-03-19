@@ -18,13 +18,6 @@ function DropdownItem({ symbol, name, closeDropdown }) {
 		background-color: ${mouseHover ? '#ccc' : 'white'};
 	`
 	const path = `/stock-details/${symbol}`
-	// const linkUrl = {
-	// 	pathname: path,
-	// 	key: uuid(),
-	// 	state: {
-	// 		applied: true
-	// 	}
-	// }
 
 	const handleClick = e => {
 		closeDropdown()
@@ -32,19 +25,19 @@ function DropdownItem({ symbol, name, closeDropdown }) {
 	}
 
 	return (
-		<Container
-			onMouseEnter={e => {
-				setMouseHover(true)
-			}}
-			onMouseLeave={e => {
-				setMouseHover(false)
-			}}
-		>
-			<Link to={path} onClick={handleClick}>
+		<Link to={path} onClick={handleClick}>
+			<Container
+				onMouseEnter={e => {
+					setMouseHover(true)
+				}}
+				onMouseLeave={e => {
+					setMouseHover(false)
+				}}
+			>
 				<TicketSymbol>{symbol}</TicketSymbol>
 				<CompanyName>{name}</CompanyName>
-			</Link>
-		</Container>
+			</Container>
+		</Link>
 	)
 }
 
