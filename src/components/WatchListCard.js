@@ -52,6 +52,7 @@ const RemoveBtn = styled.button`
 	background-color: transparent;
 	font-style: italic;
 	cursor: pointer;
+	font-size: 0.9rem;
 `
 
 function WatchListCard({

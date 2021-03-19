@@ -49,7 +49,7 @@ const SectionHeader = styled.h2`
 const TRENDING_LIST_SIZE = 9
 
 function Homepage() {
-	const [marketSummaryState, setMarketState] = useState([])
+	const [marketSummaryState, setMarketSummeryState] = useState([])
 	const [trendingStocks, setTrendingStocks] = useState([])
 	const [loading, setLoading] = useState(true)
 	const watchList = useSelector(getWatchList)
@@ -62,7 +62,13 @@ function Homepage() {
 				getStatistics('spy'),
 				getTrendingStocks()
 			])
-			setMarketState([dow, nasdaq, spy])
+			setMarketSummeryState([dow, nasdaq, spy])
+			const trendingResult = await Promise.all(
+				trending
+					.slice(0, TRENDING_LIST_SIZE)
+					.map(item => getNameAndSymbol(item.symbol))
+			)
+			setTrendingStocks(trendingResult)
 			// setTrendingStocks(trending)
 			setLoading(false)
 		} catch {
@@ -70,29 +76,23 @@ function Homepage() {
 		}
 	}
 
-	const fetchTrendingStocks = async () => {
-		const results = await getTrendingStocks()
-		// setTrendingStocks(results)
-		const trending = await Promise.all(
-			results
-				.slice(0, TRENDING_LIST_SIZE)
-				.map(item => getNameAndSymbol(item.symbol))
-		)
-		setTrendingStocks(trending)
-	}
+	// const fetchTrendingStocks = async () => {
+	// 	const results = await getTrendingStocks()
+	// 	// setTrendingStocks(results)
+	// 	const trending = await Promise.all(
+	// 		results
+	// 			.slice(0, TRENDING_LIST_SIZE)
+	// 			.map(item => getNameAndSymbol(item.symbol))
+	// 	)
+	// 	setTrendingStocks(trending)
+	// }
 
 	useEffect(() => {
 		let dow, nasdaq, spy, trending
 		setLoading(true)
-		// setTimeout(() => {
-		// 	setMarketState(mockData.market)
-		// 	setLoading(false)
-		// }, 500)
 		fetchData(dow, nasdaq, spy, trending)
 
-		fetchTrendingStocks()
-		setMarketState(mockData.market)
-		setLoading(false)
+		// fetchTrendingStocks()
 	}, [])
 
 	return (
