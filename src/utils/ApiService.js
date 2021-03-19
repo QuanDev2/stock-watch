@@ -1,4 +1,4 @@
-const API_KEY = process.env.REACT_APP_API_KEY_2
+const API_KEY = process.env.REACT_APP_API_KEY_3
 const API_KEY_LOW_LATENCY = process.env.REACT_APP_API_KEY_LOW_LATENCY
 
 function fetchYahooFinanceData(endpoint, symbol, region = 'US') {
@@ -46,7 +46,6 @@ export async function getTrendingLowLatency() {
 			)
 		).json()
 	).finance.result[0].quotes
-	
 }
 
 export async function getStockDetailsLowLatency(symbol) {

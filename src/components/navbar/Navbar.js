@@ -43,7 +43,7 @@ const DropdownContainer = styled.div``
 
 const LinkContainer = styled.div``
 
-function Navbar() {
+function Navbar({ changeSymbol }) {
 	const [searchInput, setSearchInput] = useState('')
 	const [searchResults, setSearchResults] = useState([])
 	const [openDropdown, setOpenDropdown] = useState(false)
@@ -60,7 +60,6 @@ function Navbar() {
 		setSearchResults(await getAutoCompleteSearch(e.target.value))
 		// display as dropdown
 		setOpenDropdown(true)
-		console.log(searchResults)
 	}
 
 	const handleDropdownOutsideClick = e => {
@@ -76,8 +75,6 @@ function Navbar() {
 
 	useEffect(() => {
 		document.addEventListener('mousedown', handleDropdownOutsideClick)
-
-		console.log(SearchForm)
 
 		return () => {
 			document.removeEventListener('mousedown', handleDropdownOutsideClick)
@@ -103,6 +100,7 @@ function Navbar() {
 						open={openDropdown}
 						searchInput={searchInput}
 						closeDropdown={closeDropdownOnItemClick}
+						changeSymbol={changeSymbol}
 					/>
 				</DropdownContainer>
 			</SearchForm>

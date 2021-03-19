@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useReducer } from 'react'
 import styled from '@emotion/styled'
-import { Link } from 'react-router-dom'
+import { Link, useRouteMatch, useHistory } from 'react-router-dom'
 
 const TicketSymbol = styled.span`
 	font-weight: 600;
@@ -9,20 +9,30 @@ const TicketSymbol = styled.span`
 `
 const CompanyName = styled.span``
 
-function DropdownItem({ itemKey, symbol, name, closeDropdown }) {
+function DropdownItem({ symbol, name, closeDropdown }) {
 	const [mouseHover, setMouseHover] = useState(false)
-
+	const history = useHistory()
 	const Container = styled.li`
 		padding: 0.8rem 1rem;
 		cursor: pointer;
 		background-color: ${mouseHover ? '#ccc' : 'white'};
 	`
+	const path = `/stock-details/${symbol}`
+	// const linkUrl = {
+	// 	pathname: path,
+	// 	key: uuid(),
+	// 	state: {
+	// 		applied: true
+	// 	}
+	// }
 
-	const linkUrl = `/stock-details/${symbol}`
+	const handleClick = e => {
+		closeDropdown()
+		// history.push(path)
+	}
 
 	return (
 		<Container
-			key={itemKey}
 			onMouseEnter={e => {
 				setMouseHover(true)
 			}}
@@ -30,7 +40,7 @@ function DropdownItem({ itemKey, symbol, name, closeDropdown }) {
 				setMouseHover(false)
 			}}
 		>
-			<Link to={linkUrl} onClick={closeDropdown}>
+			<Link to={path} onClick={handleClick}>
 				<TicketSymbol>{symbol}</TicketSymbol>
 				<CompanyName>{name}</CompanyName>
 			</Link>

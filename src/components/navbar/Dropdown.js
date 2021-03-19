@@ -2,6 +2,7 @@ import React from 'react'
 import styled from '@emotion/styled'
 import { BOX_SHADOW } from '../../utils/GlobalStyle'
 import DropdownItem from './DropdownItem'
+import { v4 as uuid } from 'uuid'
 
 const Container = styled.div`
 	position: relative;
@@ -33,7 +34,7 @@ function Dropdown({ contentList, open, searchInput, closeDropdown }) {
 				<ul>
 					{contentList.map(item => (
 						<DropdownItem
-							itemKey={item.key}
+							key={uuid()}
 							symbol={item.symbol}
 							name={item.name}
 							closeDropdown={closeDropdown}

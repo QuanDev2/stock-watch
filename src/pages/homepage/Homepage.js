@@ -20,12 +20,11 @@ const Container = styled.div`
 
 const MarketSummaryContainer = styled.div`
 	display: flex;
-	flex-direction:column;
+	flex-direction: column;
 	justify-content: center;
   	align-items: center;
 	margin-bottom: 15px;
 `
-	
 
 function Homepage() {
 	const [ marketSummaryState, setMarketState ] = useState([])
@@ -37,7 +36,7 @@ function Homepage() {
 			[dow,nasdaq,spy] = await Promise.all([
 				getStatistics('dow'),
 				getStatistics('ndaq'),
-				getStatistics('spy'),
+				getStatistics('spy')
 			])
 			setMarketState([dow,nasdaq,spy])
 			setLoaded(prevLoaded => !prevLoaded)
@@ -46,11 +45,11 @@ function Homepage() {
 			console.log("FAILED TO ACQUIRE DATA")
 		}
 	}
-	
-	useEffect( () => {
-		let dow,nasdaq,spy
-		fetchStats(dow,nasdaq,spy)
-	}, []);
+
+	useEffect(() => {
+		let dow, nasdaq, spy
+		fetchStats(dow, nasdaq, spy)
+	}, [])
 
 	return (
 		<Container>

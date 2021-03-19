@@ -3,7 +3,7 @@ import styled from '@emotion/styled'
 
 function GlobalStyle() {
 	const globalStyle = css`
-		@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap');
+		@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
 
 		* {
 			margin: 0;
@@ -20,6 +20,13 @@ function GlobalStyle() {
 
 		li {
 			list-style: none;
+		}
+
+		:root {
+			--red: #eb0f29;
+			--green: #00ad4d;
+			--black: #333;
+			--blue: #0069d7;
 		}
 	`
 
