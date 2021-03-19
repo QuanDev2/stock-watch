@@ -16,7 +16,7 @@ import { v4 as uuid } from 'uuid'
 import TrendingStockItem from '../../components/TrendingStockItem.js'
 
 const Container = styled.div`
-	max-width: 40%;
+	max-width: 50%;
 	margin: auto;
 	margin-top: 1rem;
 	color: var(--black);
@@ -53,7 +53,6 @@ function Homepage() {
 	const [trendingStocks, setTrendingStocks] = useState([])
 	const [loading, setLoading] = useState(true)
 	const watchList = useSelector(getWatchList)
-	console.log(watchList)
 	const fetchData = async (dow, nasdaq, spy, trending) => {
 		try {
 			;[dow, nasdaq, spy, trending] = await Promise.all([

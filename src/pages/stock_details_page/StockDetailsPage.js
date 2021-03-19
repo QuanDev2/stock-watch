@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import styled from '@emotion/styled'
 import { addStock } from '../../redux/actions'
 import { useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
+//import { isInWatchlist } from '../../redux/selectors.js'
+import { watchListSymbols } from '../../redux/selectors.js'
 
 import PropagateLoader from 'react-spinners/PropagateLoader'
 import useIntrinsicValue from '../../hooks/useIntrinsicValue'
@@ -111,9 +114,12 @@ const StatsContent = styled.div``
  */
 function StockDetailsPage() {
 	const { stockData, loading, error } = useIntrinsicValue()
-	const [addedToWatchlist, setAddedToWatchlist] = useState(false)
+	const [ addedToWatchlist, setAddedToWatchlist ] = useState(false)
+	const watchList =  useSelector(watchListSymbols)
+	//const watchListStatus = useSelector(isInWatchlist(stockData.symbol)))
 	// const stockData = mockData.T
 	// const loading = false
+	
 	const dispatch = useDispatch()
 	const addToWatchListAction = addStock(
 		stockData.symbol,
@@ -146,6 +152,17 @@ function StockDetailsPage() {
 	const handleAddToWatchlist = e => {
 		dispatch(addToWatchListAction)
 	}
+	console.log(watchList)
+	console.log(isInWatchlist(stockData.symbol,watchList))
+	
+		//setAddedToWatchlist(isInWatchlist(stockData.symbol,watchList))
+	
+	//setAddedToWatchlist(isInWatchlist(stockData.symbol,watchList))
+	useEffect(() => (
+		setAddedToWatchlist(isInWatchlist(stockData.symbol,watchList))
+	),[watchList])
+
+	
 
 	return (
 		<>
@@ -160,7 +177,7 @@ function StockDetailsPage() {
 							<Label>
 								{stockData.name} ({stockData.symbol})
 							</Label>
-							{addedToWatchlist ? (
+							{ addedToWatchlist ? (
 								<AddtoWatchListBtnDisabled disabled>
 									Added to Watchlist
 								</AddtoWatchListBtnDisabled>
@@ -212,6 +229,16 @@ function StockDetailsPage() {
 }
 
 export default StockDetailsPage
+
+const isInWatchlist = (symbol,watchList) => {
+		console.log("WathcList: ", watchList)
+		console.log("Symbol: ",symbol)
+		
+		return  watchList.includes(symbol)
+		
+	}
+
+
 
 const extractData = data => {
 	const generalItems = [
