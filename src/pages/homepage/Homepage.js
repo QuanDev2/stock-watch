@@ -16,6 +16,7 @@ import { getWatchList } from '../../redux/selectors.js'
 import mockData from '../../mockdata.json'
 import { v4 as uuid } from 'uuid'
 import TrendingStockItem from '../../components/TrendingStockItem.js'
+import { BsDownload } from 'react-icons/bs'
 
 const Container = styled.div`
 	max-width: 50%;
@@ -65,34 +66,33 @@ function Homepage() {
 	/* For real API call, add trending as the 4th param of the async call */
 
 	const fetchData = async (dow, nasdaq, spy) => {
-		try {
-			;[dow, nasdaq, spy] = await Promise.all([
-				getStatistics('dow'),
-				getStatistics('ndaq'),
-				getStatistics('spy')
-				/* this is real API call but commented out to use mock data */
-
-				// getTrendingStocks(),
-			])
-			setMarketSummeryState([dow, nasdaq, spy])
-
+		;[dow, nasdaq, spy] = await Promise.all([
+			getStatistics('dow'),
+			getStatistics('ndaq'),
+			getStatistics('spy')
 			/* this is real API call but commented out to use mock data */
 
-			// const trendingResult = await Promise.all(
-			// 	trending
-			// 		.slice(0, TRENDING_LIST_SIZE)
-			// 		.map(item => getNameAndSymbol(item.symbol))
-			// )
-
-			const trendingResult = getNameAndSymbolMockData().slice(
-				0,
-				TRENDING_LIST_SIZE
-			)
-			setTrendingStocks(trendingResult)
-			setLoading(false)
-		} catch {
+			// getTrendingStocks(),
+		])
+		if (dow.message) {
 			setError('Sorry I ran out of free API calls. Please try again later.')
 		}
+		setMarketSummeryState([dow, nasdaq, spy])
+
+		/* this is real API call but commented out to use mock data */
+
+		// const trendingResult = await Promise.all(
+		// 	trending
+		// 		.slice(0, TRENDING_LIST_SIZE)
+		// 		.map(item => getNameAndSymbol(item.symbol))
+		// )
+
+		const trendingResult = getNameAndSymbolMockData().slice(
+			0,
+			TRENDING_LIST_SIZE
+		)
+		setTrendingStocks(trendingResult)
+		setLoading(false)
 	}
 
 	useEffect(() => {
