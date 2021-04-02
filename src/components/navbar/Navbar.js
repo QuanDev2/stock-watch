@@ -20,7 +20,7 @@ const TitleLink = styled(Link)`
 `
 
 const SearchForm = styled.form`
-	padding-right: 0;
+	padding-right: 120px;
 	height: 32px;
 `
 
