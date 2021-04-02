@@ -5,7 +5,9 @@ import WatchListCard from '../../components/WatchListCard.js'
 import {
 	getNameAndSymbol,
 	getTrendingStocks,
-	getStatistics
+	getStatistics,
+	getTrendingStocksMockData,
+	getNameAndSymbolMockData
 } from '../../utils/ApiService.js'
 import PropagateLoader from 'react-spinners/PropagateLoader'
 import { SpinnerContainer } from '../../utils/GlobalStyle.js'
@@ -46,134 +48,150 @@ const SectionHeader = styled.h2`
 	text-align: center;
 `
 
+const ErrorContainer = styled.div`
+	text-align: center;
+	margin-top: 300px;
+`
+
 const TRENDING_LIST_SIZE = 9
 
 function Homepage() {
 	const [marketSummaryState, setMarketSummeryState] = useState([])
 	const [trendingStocks, setTrendingStocks] = useState([])
 	const [loading, setLoading] = useState(true)
+	const [error, setError] = useState('')
+
 	const watchList = useSelector(getWatchList)
-	const fetchData = async (dow, nasdaq, spy, trending) => {
+	/* For real API call, add trending as the 4th param of the async call */
+
+	const fetchData = async (dow, nasdaq, spy) => {
 		try {
-			;[dow, nasdaq, spy, trending] = await Promise.all([
+			;[dow, nasdaq, spy] = await Promise.all([
 				getStatistics('dow'),
 				getStatistics('ndaq'),
-				getStatistics('spy'),
-				getTrendingStocks()
+				getStatistics('spy')
+				/* this is real API call but commented out to use mock data */
+
+				// getTrendingStocks(),
 			])
 			setMarketSummeryState([dow, nasdaq, spy])
-			const trendingResult = await Promise.all(
-				trending
-					.slice(0, TRENDING_LIST_SIZE)
-					.map(item => getNameAndSymbol(item.symbol))
+
+			/* this is real API call but commented out to use mock data */
+
+			// const trendingResult = await Promise.all(
+			// 	trending
+			// 		.slice(0, TRENDING_LIST_SIZE)
+			// 		.map(item => getNameAndSymbol(item.symbol))
+			// )
+
+			const trendingResult = getNameAndSymbolMockData().slice(
+				0,
+				TRENDING_LIST_SIZE
 			)
 			setTrendingStocks(trendingResult)
-			// setTrendingStocks(trending)
 			setLoading(false)
 		} catch {
-			console.log('FAILED TO ACQUIRE DATA')
+			setError('Sorry I ran out of free API calls. Please try again later.')
 		}
 	}
-
-	// const fetchTrendingStocks = async () => {
-	// 	const results = await getTrendingStocks()
-	// 	// setTrendingStocks(results)
-	// 	const trending = await Promise.all(
-	// 		results
-	// 			.slice(0, TRENDING_LIST_SIZE)
-	// 			.map(item => getNameAndSymbol(item.symbol))
-	// 	)
-	// 	setTrendingStocks(trending)
-	// }
 
 	useEffect(() => {
 		let dow, nasdaq, spy, trending
 		setLoading(true)
 		fetchData(dow, nasdaq, spy, trending)
-
-		// fetchTrendingStocks()
 	}, [])
 
-	return (
-		<>
-			{loading ? (
-				<SpinnerContainer>
-					<PropagateLoader color={'#36D7B7'} size={30} />
-				</SpinnerContainer>
-			) : (
-				<Container>
-					<div
-						style={{
-							display: 'flex',
-							justifyContent: 'space-between'
-						}}
-					>
-						<MarketSummaryContainer>
-							<SectionHeader>Market Summary</SectionHeader>
-							<MarketSummaryCard
-								price={marketSummaryState[0].price.regularMarketPrice.fmt}
-								change={
-									marketSummaryState[0].price.regularMarketChangePercent.fmt
-								}
-								volume={marketSummaryState[0].price.regularMarketVolume.fmt}
-								symbol={marketSummaryState[0].price.shortName}
-							/>
-							<MarketSummaryCard
-								price={marketSummaryState[1].price.regularMarketPrice.fmt}
-								change={
-									marketSummaryState[1].price.regularMarketChangePercent.fmt
-								}
-								volume={marketSummaryState[1].price.regularMarketVolume.fmt}
-								symbol={marketSummaryState[1].price.shortName}
-							/>
-							<MarketSummaryCard
-								price={marketSummaryState[2].price.regularMarketPrice.fmt}
-								change={
-									marketSummaryState[2].price.regularMarketChangePercent.fmt
-								}
-								volume={marketSummaryState[2].price.regularMarketVolume.fmt}
-								symbol={marketSummaryState[2].price.shortName}
-							/>
-						</MarketSummaryContainer>
-						<MarketTrendContainer>
-							<SectionHeader>Trending Stocks</SectionHeader>
-							<ul>
-								{trendingStocks.map(item => (
-									<li key={uuid()}>
-										<TrendingStockItem symbol={item.symbol} name={item.name} />{' '}
-									</li>
-								))}
-							</ul>
-						</MarketTrendContainer>
-					</div>
-					<WatchlistContainer>
-						<SectionHeader style={{ marginTop: '2rem' }}>
-							Watchlist
-						</SectionHeader>
-						{watchList.length ? (
-							<ul>
-								{watchList.map(stock => (
-									<li key={uuid()}>
-										<WatchListCard
-											price={stock.price}
-											changeRaw={stock.priceChangeRaw}
-											changeFmt={stock.priceChangeFmt}
-											symbol={stock.symbol}
-											name={stock.name}
-											intrinsicValue={stock.intrinsicValue}
-											verdict={stock.verdict}
-										/>
-									</li>
-								))}
-							</ul>
-						) : (
-							<div style={{ textAlign: 'center' }}>Watchlist is empty</div>
-						)}
-					</WatchlistContainer>
-				</Container>
-			)}
-		</>
-	)
+	if (error) {
+		return (
+			<ErrorContainer>
+				<p style={{ fontSize: '20px' }}>{error}</p>
+			</ErrorContainer>
+		)
+	} else {
+		return (
+			<>
+				{loading ? (
+					<SpinnerContainer>
+						<PropagateLoader color={'#36D7B7'} size={30} />
+					</SpinnerContainer>
+				) : (
+					<Container>
+						<div
+							style={{
+								display: 'flex',
+								justifyContent: 'space-between'
+							}}
+						>
+							<MarketSummaryContainer>
+								<SectionHeader>Market Summary</SectionHeader>
+								<MarketSummaryCard
+									price={marketSummaryState[0].price.regularMarketPrice.fmt}
+									change={
+										marketSummaryState[0].price.regularMarketChangePercent.fmt
+									}
+									volume={marketSummaryState[0].price.regularMarketVolume.fmt}
+									symbol={marketSummaryState[0].price.shortName}
+								/>
+								<MarketSummaryCard
+									price={marketSummaryState[1].price.regularMarketPrice.fmt}
+									change={
+										marketSummaryState[1].price.regularMarketChangePercent.fmt
+									}
+									volume={marketSummaryState[1].price.regularMarketVolume.fmt}
+									symbol={marketSummaryState[1].price.shortName}
+								/>
+								<MarketSummaryCard
+									price={marketSummaryState[2].price.regularMarketPrice.fmt}
+									change={
+										marketSummaryState[2].price.regularMarketChangePercent.fmt
+									}
+									volume={marketSummaryState[2].price.regularMarketVolume.fmt}
+									symbol={marketSummaryState[2].price.shortName}
+								/>
+							</MarketSummaryContainer>
+							<MarketTrendContainer>
+								<SectionHeader>Trending Stocks</SectionHeader>
+								<ul>
+									{trendingStocks.map(item => (
+										<li key={uuid()}>
+											<TrendingStockItem
+												symbol={item.symbol}
+												name={item.name}
+											/>{' '}
+										</li>
+									))}
+								</ul>
+							</MarketTrendContainer>
+						</div>
+						<WatchlistContainer>
+							<SectionHeader style={{ marginTop: '2rem' }}>
+								Watchlist
+							</SectionHeader>
+							{watchList.length ? (
+								<ul>
+									{watchList.map(stock => (
+										<li key={uuid()}>
+											<WatchListCard
+												price={stock.price}
+												changeRaw={stock.priceChangeRaw}
+												changeFmt={stock.priceChangeFmt}
+												symbol={stock.symbol}
+												name={stock.name}
+												intrinsicValue={stock.intrinsicValue}
+												verdict={stock.verdict}
+											/>
+										</li>
+									))}
+								</ul>
+							) : (
+								<div style={{ textAlign: 'center' }}>Watchlist is empty</div>
+							)}
+						</WatchlistContainer>
+					</Container>
+				)}
+			</>
+		)
+	}
 }
 
 export default Homepage

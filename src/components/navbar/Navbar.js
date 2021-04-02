@@ -50,16 +50,23 @@ function Navbar({ changeSymbol }) {
 
 	const dropdownRef = useRef()
 
-	const handleSubmit = e => {
+	const handleSubmit = async e => {
 		e.preventDefault()
-	}
-
-	async function handleInputchange(e) {
-		setSearchInput(e.target.value)
 		// make api call to /auto-complete
 		setSearchResults(await getAutoCompleteSearch(e.target.value))
 		// display as dropdown
 		setOpenDropdown(true)
+	}
+	console.log(openDropdown)
+	async function handleInputchange(e) {
+		setSearchInput(e.target.value)
+
+		/* This is commented out because of API call limit, so we won't search on every keystroke */
+
+		// // make api call to /auto-complete
+		// setSearchResults(await getAutoCompleteSearch(e.target.value))
+		// // display as dropdown
+		// setOpenDropdown(true)
 	}
 
 	const handleDropdownOutsideClick = e => {

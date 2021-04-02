@@ -114,12 +114,12 @@ const StatsContent = styled.div``
  */
 function StockDetailsPage() {
 	const { stockData, loading, error } = useIntrinsicValue()
-	const [ addedToWatchlist, setAddedToWatchlist ] = useState(false)
-	const watchList =  useSelector(watchListSymbols)
+	const [addedToWatchlist, setAddedToWatchlist] = useState(false)
+	const watchList = useSelector(watchListSymbols)
 	//const watchListStatus = useSelector(isInWatchlist(stockData.symbol)))
 	// const stockData = mockData.T
 	// const loading = false
-	
+
 	const dispatch = useDispatch()
 	const addToWatchListAction = addStock(
 		stockData.symbol,
@@ -152,17 +152,16 @@ function StockDetailsPage() {
 	const handleAddToWatchlist = e => {
 		dispatch(addToWatchListAction)
 	}
-	console.log(watchList)
-	console.log(isInWatchlist(stockData.symbol,watchList))
-	
-		//setAddedToWatchlist(isInWatchlist(stockData.symbol,watchList))
-	
-	//setAddedToWatchlist(isInWatchlist(stockData.symbol,watchList))
-	useEffect(() => (
-		setAddedToWatchlist(isInWatchlist(stockData.symbol,watchList))
-	),[watchList])
+	// console.log(watchList)
+	// console.log(isInWatchlist(stockData.symbol, watchList))
 
-	
+	//setAddedToWatchlist(isInWatchlist(stockData.symbol,watchList))
+
+	//setAddedToWatchlist(isInWatchlist(stockData.symbol,watchList))
+	useEffect(
+		() => setAddedToWatchlist(isInWatchlist(stockData.symbol, watchList)),
+		[watchList]
+	)
 
 	return (
 		<>
@@ -175,9 +174,9 @@ function StockDetailsPage() {
 					<Header>
 						<LabelContainer>
 							<Label>
-								{stockData.name} ({stockData.symbol})
+								{stockData.name} ({stockData.symbol.toUpperCase()})
 							</Label>
-							{ addedToWatchlist ? (
+							{addedToWatchlist ? (
 								<AddtoWatchListBtnDisabled disabled>
 									Added to Watchlist
 								</AddtoWatchListBtnDisabled>
@@ -187,11 +186,11 @@ function StockDetailsPage() {
 								</AddtoWatchListBtn>
 							)}
 						</LabelContainer>
-						<CurrentPrice>{stockData.currentPrice}</CurrentPrice>
+						<CurrentPrice>${stockData.currentPrice}</CurrentPrice>
 						<MarketChange>
-							{stockData.priceChangeFmt} ({stockData.priceChangePercentFmt})
+							${stockData.priceChangeFmt} ({stockData.priceChangePercentFmt})
 						</MarketChange>
-						<PriceCaption>Market price in USD</PriceCaption>
+						{/* <PriceCaption>Market price in USD</PriceCaption> */}
 					</Header>
 					<MainContent>
 						<StatsContainer>
@@ -230,15 +229,12 @@ function StockDetailsPage() {
 
 export default StockDetailsPage
 
-const isInWatchlist = (symbol,watchList) => {
-		console.log("WathcList: ", watchList)
-		console.log("Symbol: ",symbol)
-		
-		return  watchList.includes(symbol)
-		
-	}
+const isInWatchlist = (symbol, watchList) => {
+	// console.log('WathcList: ', watchList)
+	// console.log('Symbol: ', symbol)
 
-
+	return watchList.includes(symbol)
+}
 
 const extractData = data => {
 	const generalItems = [

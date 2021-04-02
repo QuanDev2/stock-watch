@@ -48,6 +48,72 @@ export async function getTrendingStocks() {
 	).finance.result[0].quotes
 }
 
+export function getTrendingStocksMockData() {
+	const mockData = [
+		{
+			symbol: 'NKE'
+		},
+		{
+			symbol: 'SQ'
+		},
+		{
+			symbol: 'FDX'
+		},
+		{
+			symbol: 'GTBIF'
+		},
+		{
+			symbol: 'CL=F'
+		},
+		{
+			symbol: 'WKEY'
+		},
+		{
+			symbol: 'JFIN'
+		},
+		{
+			symbol: 'MRKR'
+		},
+		{
+			symbol: 'RBLX'
+		},
+		{
+			symbol: 'SKLZ'
+		},
+		{
+			symbol: 'JMIA'
+		},
+		{
+			symbol: 'EXPR'
+		},
+		{
+			symbol: 'MP'
+		},
+		{
+			symbol: 'IDRA'
+		},
+		{
+			symbol: 'NWG.L'
+		},
+		{
+			symbol: 'KNSA'
+		},
+		{
+			symbol: 'TSLA'
+		},
+		{
+			symbol: 'SRPT'
+		},
+		{
+			symbol: 'AAME'
+		},
+		{
+			symbol: 'HIG'
+		}
+	]
+	return mockData
+}
+
 export async function getStockDetailsLowLatency(symbol) {
 	return await (
 		await (
@@ -81,6 +147,76 @@ export async function getNameAndSymbol(symbol) {
 		).json()
 	).quoteSummary.result[0].price
 	return { symbol: result.symbol, name: result.shortName }
+}
+
+export function getNameAndSymbolMockData() {
+	const mockData = [
+		{
+			symbol: 'TSLA',
+			name: 'Tesla Inc'
+		},
+		{
+			symbol: 'SQ',
+			name: 'Square Inc'
+		},
+		{
+			symbol: 'FDX',
+			name: 'FedEx Corporation'
+		},
+		{
+			symbol: 'GTBIF',
+			name: 'Green Thumb Industries Inc'
+		},
+		{
+			symbol: 'GME',
+			name: 'GameStop Corp.'
+		},
+		{
+			symbol: 'AMC',
+			name: 'AMC Entertainment Holdings Inc'
+		},
+		{
+			symbol: 'BTC-USD',
+			name: 'Bitcoin USD'
+		},
+		{
+			symbol: 'RBLX',
+			name: 'Roblox Corp'
+		},
+		{
+			symbol: 'SKLZ',
+			name: 'Skillz Inc'
+		},
+		{
+			symbol: 'ARKK',
+			name: ' ARK Innovation ETF'
+		},
+		{
+			symbol: 'EXPR',
+			name: 'Express, Inc.'
+		},
+		{
+			symbol: 'MP',
+			name: 'Mp Materials Corp'
+		},
+		{
+			symbol: 'IDRA',
+			name: 'Idera Pharmaceuticals Inc'
+		},
+		{
+			symbol: 'SRPT',
+			name: 'Sarepta Therapeutics Inc'
+		},
+		{
+			symbol: 'AAME',
+			name: 'Atlantic American Corporation'
+		},
+		{
+			symbol: 'HIG',
+			name: 'Hartford Financial Services Group Inc'
+		}
+	]
+	return mockData
 }
 
 export async function getAutoCompleteSearch(query) {

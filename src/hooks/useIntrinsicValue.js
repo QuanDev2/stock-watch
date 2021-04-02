@@ -67,10 +67,17 @@ function useIntrinsicValue() {
 			])
 
 			// do calculations
-			const currentOperatingCashFlow =
-				statisticsData.financialData.operatingCashflow.raw
-			const currentOperatingCashFlowFmt =
-				'$' + statisticsData.financialData.operatingCashflow.fmt
+			let currentOperatingCashFlow, currentOperatingCashFlowFmt
+			if (isNotEmpty(statisticsData.financialData.operatingCashflow)) {
+				currentOperatingCashFlow =
+					statisticsData.financialData.operatingCashflow.raw
+				currentOperatingCashFlowFmt =
+					'$' + statisticsData.financialData.operatingCashflow.fmt
+			} else {
+				currentOperatingCashFlow = 0
+				currentOperatingCashFlowFmt = '-'
+			}
+
 			const currentPrice = statisticsData.price.regularMarketPrice.raw
 			const name = statisticsData.price.shortName
 			const sharesOutStanding =
@@ -85,16 +92,17 @@ function useIntrinsicValue() {
 			const priceChangeRaw = statisticsData.price.regularMarketChange.raw
 
 			const marketCap = '$' + statisticsData.price.marketCap.fmt
-			const eps = statisticsData.defaultKeyStatistics.forwardEps
+			const eps = isNotEmpty(statisticsData.defaultKeyStatistics.forwardEps)
 				? '$' + statisticsData.defaultKeyStatistics.forwardEps.fmt
 				: '-'
-			const pe = statisticsData.defaultKeyStatistics.forwardPE
+			const pe = isNotEmpty(statisticsData.defaultKeyStatistics.forwardPE)
 				? '$' + statisticsData.defaultKeyStatistics.forwardPE.fmt
 				: '-'
-			const dividendYieldFmt = statisticsData.summaryDetail.dividendYield
+			const dividendYieldFmt = isNotEmpty(
+				statisticsData.summaryDetail.dividendYield
+			)
 				? statisticsData.summaryDetail.dividendYield.fmt
 				: '-'
-
 			let cash = 0
 			let cashFmt = '-'
 			let shortTermInvestments = 0
@@ -259,7 +267,7 @@ function useIntrinsicValue() {
 		} else if (beta > 1.6) {
 			newBeta = 1.6
 		}
-		return RISK_FREE_RATE + beta * MARKET_RISK_PREMIUM
+		return RISK_FREE_RATE + newBeta * MARKET_RISK_PREMIUM
 	}
 
 	const getSumDiscountedCashFlow20Years = (
@@ -314,6 +322,10 @@ function useIntrinsicValue() {
 
 	const getVerdict = (currentprice, intrinsicValue) => {
 		return ((currentprice - intrinsicValue) / intrinsicValue) * 100
+	}
+
+	const isNotEmpty = obj => {
+		return Object.keys(obj).length !== 0
 	}
 
 	useEffect(() => {
