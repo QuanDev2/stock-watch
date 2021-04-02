@@ -14,35 +14,38 @@ const Container = styled.div`
 `
 
 function Dropdown({ contentList, open, searchInput, closeDropdown }) {
-	if (searchInput && contentList.length === 0) {
-		return (
-			<Container>
-				<span
-					style={{
-						padding: '2rem 1rem'
-					}}
-				>
-					We were unable to find any results for your search.
-				</span>
-			</Container>
-		)
-	} else if (!open || !searchInput) {
-		return null
-	} else {
-		return (
-			<Container>
-				<ul>
-					{contentList.map(item => (
-						<DropdownItem
-							key={uuid()}
-							symbol={item.symbol}
-							name={item.name}
-							closeDropdown={closeDropdown}
-						/>
-					))}
-				</ul>
-			</Container>
-		)
+	if (!open) return null
+	else {
+		if (searchInput && contentList.length === 0) {
+			return (
+				<Container>
+					<span
+						style={{
+							padding: '2rem 1rem'
+						}}
+					>
+						We were unable to find any results for your search.
+					</span>
+				</Container>
+			)
+		} else if (!searchInput) {
+			return null
+		} else {
+			return (
+				<Container>
+					<ul>
+						{contentList.map(item => (
+							<DropdownItem
+								key={uuid()}
+								symbol={item.symbol}
+								name={item.name}
+								closeDropdown={closeDropdown}
+							/>
+						))}
+					</ul>
+				</Container>
+			)
+		}
 	}
 }
 export default Dropdown

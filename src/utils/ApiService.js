@@ -220,18 +220,18 @@ export function getNameAndSymbolMockData() {
 }
 
 export async function getAutoCompleteSearch(query) {
-	return await (
-		await (
-			await fetch(
-				`https://yahoo-finance-low-latency.p.rapidapi.com/v6/finance/autocomplete?query=${query}&lang=en&region=US`,
-				{
-					method: 'GET',
-					headers: {
-						'x-rapidapi-key': API_KEY_LOW_LATENCY,
-						'x-rapidapi-host': 'yahoo-finance-low-latency.p.rapidapi.com'
-					}
+	const fetchResult = await (
+		await fetch(
+			`https://yahoo-finance-low-latency.p.rapidapi.com/v6/finance/autocomplete?query=${query}&lang=en&region=US`,
+			{
+				method: 'GET',
+				headers: {
+					'x-rapidapi-key': API_KEY_LOW_LATENCY,
+					'x-rapidapi-host': 'yahoo-finance-low-latency.p.rapidapi.com'
 				}
-			)
-		).json()
-	).ResultSet.Result
+			}
+		)
+	).json()
+	console.log(fetchResult)
+	return await fetchResult.ResultSet.Result
 }

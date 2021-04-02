@@ -53,7 +53,8 @@ function Navbar({ changeSymbol }) {
 	const handleSubmit = async e => {
 		e.preventDefault()
 		// make api call to /auto-complete
-		setSearchResults(await getAutoCompleteSearch(e.target.value))
+		console.log('query: ', searchInput)
+		setSearchResults(await getAutoCompleteSearch(searchInput))
 		// display as dropdown
 		setOpenDropdown(true)
 	}
