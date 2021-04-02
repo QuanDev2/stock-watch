@@ -10,10 +10,14 @@ const Container = styled.nav`
 	align-items: center;
 	justify-content: space-between;
 	padding: 0.5rem 2rem;
-	background-color: #eee;
+	background-color: var(--green);
 `
 
-const TitleLink = styled(Link)``
+const TitleLink = styled(Link)`
+	color: white;
+	font-size: 1.5rem;
+	font-weight: 600;
+`
 
 const SearchForm = styled.form`
 	padding-right: 0;
@@ -112,9 +116,7 @@ function Navbar({ changeSymbol }) {
 					/>
 				</DropdownContainer>
 			</SearchForm>
-			<LinkContainer>
-				<Link to="#">My Stocks</Link>
-			</LinkContainer>
+			<LinkContainer>{/* <Link to="#">My Stocks</Link> */}</LinkContainer>
 		</Container>
 	)
 }
